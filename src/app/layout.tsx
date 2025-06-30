@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
+import Navbar from "@/components/header";
+import Footer from "@/components/footer";
+import ColorfulWebsite from "./colorful";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,11 +28,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body>
+        <ColorfulWebsite/>
       </body>
     </html>
   );
 }
+    // <html lang="en">
+    //   <body
+    //     className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen`}
+    //   >
+    //     <Navbar />
+
+    //     <main className="max-w-4xl mx-auto mt-8 p-6 bg-white/80 rounded-xl shadow-xl border border-blue-100 backdrop-blur-sm">
+    //       {children}
+    //     </main>
+
+    //     <Footer />
+    //   </body>
+    // </html>
