@@ -97,7 +97,7 @@ const Footer = () => {
 
           <div className="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/60 text-sm">
-              © 2025 NongFirtsTH. All rights reserved.
+              &copy; {new Date().getFullYear()}{" "} NongFirtsTH. All rights reserved.
             </p>
             <p className="text-white/60 text-sm mt-2 md:mt-0">
               Made with ❤️ and lots of passion
@@ -110,10 +110,3 @@ const Footer = () => {
 };
 
 export default Footer;
-// <footer className="w-full mt-10 p-6 bg-gradient-to-r from-teal-100 via-blue-100 to-teal-100 text-center text-blue-800 font-medium backdrop-blur-sm shadow-inner rounded-t-lg">
-//   <span className="inline-flex items-center gap-2 justify-center">
-//     &copy; {new Date().getFullYear()}{" "}
-//     <a href="https://github.com/NongFirstTH" target="_blank" className="hover:text-blue-500 transition-all">NongFirstTH</a>.
-//     <p>All rights reserved.</p>
-//   </span>
-// </footer>
