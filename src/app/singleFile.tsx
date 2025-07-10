@@ -4,9 +4,11 @@ import React, { useState, useRef } from "react";
 import { Upload, Download, FileText, Loader2 } from "lucide-react";
 import { degrees } from "pdf-lib";
 
-const PdfWatermark = () => {
+const SingleFile = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [watermarkText, setWatermarkText] = useState("68061000 ตัวอย่าง นะครับ");
+  const [watermarkText, setWatermarkText] = useState(
+    "680610000 ตัวอย่าง นะครับ"
+  );
   const [isProcessing, setIsProcessing] = useState(false);
   const [processedPdfUrl, setProcessedPdfUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,7 +76,7 @@ const PdfWatermark = () => {
       }
 
       // Watermark settings
-      const fontSize = 41;
+      const fontSize = 42;
       const textColor = rgb(0.7, 0.7, 0.7);
       const opacity = 0.3;
 
@@ -91,7 +93,7 @@ const PdfWatermark = () => {
         // Add single watermark at center with 45-degree rotation
         page.drawText(watermarkText, {
           x: centerX - textWidth / 3,
-          y: centerY - textHeight * 2,
+          y: centerY - textHeight * 2.5,
           size: fontSize,
           font: font,
           color: textColor,
@@ -136,12 +138,12 @@ const PdfWatermark = () => {
   };
 
   return (
-    <>
+    <div className="text-center bg-black/20 backdrop-blur-sm rounded-2xl p-8">
       {/* PDF Watermark Tool Section */}
       <div className="max-w-4xl mx-auto mb-16">
         <div className="text-center mb-8">
           {/* Instructions */}
-          <div className="bg-gradient-to-r from-blue-700/50 to-purple-200/50 backdrop-blur-sm border border-white/30 rounded-xl p-6 mb-8">
+          <div className="bg-gradient-to-r from-blue-700/50 to-purple-200/50 backdrop-blur-sm  rounded-xl p-6 mb-8">
             <h3 className="font-semibold text-xl text-white mb-4">
               📋 วิธีใช้งาน
             </h3>
@@ -224,7 +226,7 @@ const PdfWatermark = () => {
             <button
               onClick={addWatermarkToPdf}
               disabled={!file || !watermarkText.trim() || isProcessing}
-              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed flex items-center space-x-3 transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100"
+              className="cursor-pointer px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed flex items-center space-x-3 transition-all duration-300 transform hover:scale-105 disabled:hover:scale-100"
             >
               {isProcessing ? (
                 <>
@@ -242,14 +244,14 @@ const PdfWatermark = () => {
 
           {/* Download Section */}
           {processedPdfUrl && (
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm border border-green-400/30 rounded-xl p-6 animate-pulse">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
+            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm border border-green-400/30 rounded-xl p-4 sm:p-6 animate-pulse">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex items-start sm:items-center gap-3">
                   <div className="flex-shrink-0">
-                    <FileText className="w-8 h-8 text-green-400" />
+                    <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-green-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium text-white">
+                    <h3 className="text-base sm:text-lg font-medium text-white">
                       ✨ Watermark Added Successfully!
                     </h3>
                     <p className="text-sm text-green-300">
@@ -257,17 +259,17 @@ const PdfWatermark = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex space-x-3">
+                <div className="flex flex-col sm:flex-row sm:space-x-3 gap-3">
                   <button
                     onClick={() => downloadWatermarkedPdf(watermarkText)}
-                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl flex items-center space-x-2 transition-all duration-300 transform hover:scale-105"
+                    className="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-full font-semibold shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download</span>
                   </button>
                   <button
                     onClick={resetForm}
-                    className="px-6 py-3 bg-gradient-to-r from-gray-500/50 to-gray-600/50 backdrop-blur-sm hover:from-gray-600/60 hover:to-gray-700/60 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+                    className="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-gray-500/50 to-gray-600/50 backdrop-blur-sm hover:from-gray-600/60 hover:to-gray-700/60 text-white rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
                   >
                     Reset
                   </button>
@@ -297,154 +299,8 @@ const PdfWatermark = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default PdfWatermark;
-
-// <div className="max-w-4xl mx-auto p-6 ">
-//   <div className="text-center mb-8">
-//     {/* Instructions */}
-//     <div className="border border-blue-200 rounded-lg p-4">
-//       <h3 className="font-medium text-xl text-blue-800 mb-2">Instructions</h3>
-//       <ul className="text-sm text-blue-700 space-y-1">
-//         <li>• เลือกไฟล์ PDF จากอุปกรณ์ของคุณ</li>
-//         <li>• กรอกข้อความลายน้ำที่ต้องการ (ไทย/อังกฤษ)</li>
-//         <li>• คลิก "Add Watermark" เพื่อประมวลผล PDF</li>
-//         <li>• ดาวน์โหลด PDF ที่มีลายน้ำแล้ว</li>
-//       </ul>
-//     </div>
-
-//     <p className="text-gray-600 mt-8">
-//       Add text watermarks to your PDF documents
-//     </p>
-//   </div>
-
-//   <div className="space-y-6">
-//     {/* File Upload Section */}
-//     <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors">
-//       <input
-//         type="file"
-//         accept=".pdf"
-//         onChange={handleFileSelect}
-//         ref={fileInputRef}
-//         className="hidden"
-//         id="pdf-upload"
-//       />
-//       <label
-//         htmlFor="pdf-upload"
-//         className="cursor-pointer flex flex-col items-center space-y-4"
-//       >
-//         <Upload className="w-12 h-12 text-gray-400" />
-//         <div>
-//           <p
-//             className={
-//               "text-lg font-medium " +
-//               (file ? "text-blue-600 text-xl" : "text-gray-700")
-//             }
-//           >
-//             {file ? file.name : "Choose PDF file"}
-//           </p>
-//           <p className="text-sm text-gray-500">
-//             Click to browse or drag and drop
-//           </p>
-//         </div>
-//       </label>
-//     </div>
-
-//     {/* Watermark Text Input */}
-//     <div>
-//       <label
-//         htmlFor="watermark-text"
-//         className="block text-sm font-medium text-gray-700 mb-2"
-//       >
-//         Watermark Text
-//       </label>
-//       <input
-//         type="text"
-//         id="watermark-text"
-//         value={watermarkText}
-//         onChange={(e) => setWatermarkText(e.target.value)}
-//         placeholder="Enter watermark text"
-//         className="text-gray-500 w-full px-4 py-2 border border-gray-300 rounded-md focus:border-sky-500 focus:outline focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-//         style={{ fontFamily: 'Arial, "Noto Sans Thai", sans-serif' }}
-//       />
-//     </div>
-
-//     {/* Process Button */}
-//     <div className="flex justify-center">
-//       <button
-//         onClick={addWatermarkToPdf}
-//         disabled={!file || !watermarkText.trim() || isProcessing}
-//         className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center space-x-2 transition-colors"
-//       >
-//         {isProcessing ? (
-//           <>
-//             <Loader2 className="w-5 h-5 animate-spin" />
-//             <span>Processing...</span>
-//           </>
-//         ) : (
-//           <>
-//             <FileText className="w-5 h-5" />
-//             <span>Add Watermark</span>
-//           </>
-//         )}
-//       </button>
-//     </div>
-
-//     {/* Download Section */}
-//     {processedPdfUrl && (
-//       <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-//         <div className="flex items-center justify-between">
-//           <div className="flex items-center space-x-3">
-//             <div className="flex-shrink-0">
-//               <FileText className="w-8 h-8 text-green-600" />
-//             </div>
-//             <div>
-//               <h3 className="text-lg font-medium text-green-800">
-//                 Watermark Added Successfully!
-//               </h3>
-//               <p className="text-sm text-green-600">
-//                 Your PDF is ready for download
-//               </p>
-//             </div>
-//           </div>
-//           <div className="flex space-x-3">
-//             <button
-//               onClick={() => downloadWatermarkedPdf(watermarkText)}
-//               className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center space-x-2 transition-colors"
-//             >
-//               <Download className="w-4 h-4" />
-//               <span>Download</span>
-//             </button>
-//             <button
-//               onClick={resetForm}
-//               className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
-//             >
-//               Reset
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     )}
-
-//     {/* Preview Section */}
-//     {processedPdfUrl && (
-//       <div className="border border-gray-300 rounded-lg overflow-hidden">
-//         <div className="bg-gray-50 px-4 py-2 border-b border-gray-300">
-//           <h3 className="text-lg font-medium text-gray-700">Preview</h3>
-//         </div>
-//         <div className="p-4">
-//           <iframe
-//             src={processedPdfUrl}
-//             width="100%"
-//             height="600px"
-//             className="border-0 rounded"
-//             title="PDF Preview"
-//           />
-//         </div>
-//       </div>
-//     )}
-//   </div>
-// </div>
+export default SingleFile;
